@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Café Bonfil</title>
+  <style>
+    /* Usa el mismo estilo base, adaptado a cafetería */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f5f0;
+      margin: 0;
+      padding: 0;
+      color: #3e2723;
+    }
+
+    header {
+      background-color: #4e342e;
+      color: white;
+      padding: 1em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      font-size: 1.5em;
+      font-weight: bold;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1em;
+      padding: 0;
+      margin: 0;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+    }
+
+    #hero {
+      background: url('https://images.unsplash.com/photo-1509042239860-f550ce710b93') no-repeat center center/cover;
+      color: white;
+      text-align: center;
+      padding: 5em 1em;
+    }
+
+    .cta-button {
+      background: #a1887f;
+      color: white;
+      padding: 0.7em 1.5em;
+      text-decoration: none;
+      border-radius: 5px;
+      display: inline-block;
+      margin-top: 1em;
+    }
+
+    section {
+      padding: 2em;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .productos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .producto {
+      background: white;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border: 2px solid #a1887f;
+    }
+
+    .producto img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+
+    .carrito-btn {
+      position:fixed;
+      top: 20px;
+      right: 20px;
+      background: #6d4c41;
+      color: white;
+      padding: 10px;
+      border-radius: 10px;
+      cursor: pointer;
+      z-index: 1000;
+    }
+
+    #carrito-modal {
+      display: none;
+      position:fixed;
+      top: 70px;
+      right: 20px;
+      width: 320px;
+      background: white;
+      border: 2px solid #a1887f;
+      border-radius: 10px;
+      padding: 15px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      z-index: 999;
+    }
+
+    .total {
+      font-weight: bold;
+      margin-top: 10px;
+      color: #4e342e;
+    }
+
+    footer {
+      background: #3e2723;
+      color: white;
+      text-align: center;
+      padding: 1em;
+    }
+
+    .contacto a {
+      color: #ffe0b2;
+    }
+
+    @media (max-width: 600px) {
+      nav ul {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">Café Bonfil</div>
+    <nav>
+      <ul>
+        <li><a href="#hero">Inicio</a></li>
+        <li><a href="#nosotros">Nosotros</a></li>
+        <li><a href="#menu">Menú</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="carrito-btn" onclick="toggleCarrito()">🛒 Carrito: <span id="carrito-contador">0</span></div>
+
+  <section id="hero">
+    <h1>Bienvenido a Café Bonfil</h1>
+    <p>Disfruta del aroma, sabor y calidez en cada taza.</p>
+    <a href="#menu" class="cta-button">Ver menú</a>
+  </section>
+
+  <section id="nosotros">
+    <h2>Sobre Nosotros</h2>
+    <p>En Café Bonfil servimos más que café. Somos un espacio acogedor donde cada taza cuenta una historia, hecha con pasión por baristas locales.</p>
+  </section>
+
+  <section id="menu">
+    <h2>Nuestro Menú</h2>
+    <div class="productos" id="productos-container"></div>
+  </section>
+
+  <div id="carrito-modal">
+    <h3>Tu Orden</h3>
+    <ul id="carrito-lista"></ul>
+    <div class="total">Total: $<span id="total-compra">0.00</span></div>
+  </div>
+
+  <section>
+    <h2>Testimonios</h2>
+    <blockquote>“Un café delicioso y un ambiente increíble. ¡Lo mejor de Amealco!” – Diego R.</blockquote>
+  </section>
+
+  <section id="contacto">
+    <h2>Contáctanos</h2>
+    <div class="contacto">
+      <p>📍 Dirección: Calle Hidalgo #42, Amealco De Bonfil, Querétaro</p>
+      <p>📞 Teléfono: +52 448 123 4567</p>
+      <p>📷 Instagram: <a href="https://www.instagram.com/cafe.bonfil" target="_blank">@cafe.bonfil</a></p>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Café Bonfil. Todos los derechos reservados.</p>
+  </footer>
+
+  <script>
+    const productos = [
+      { id: 1, nombre: "Café Americano", imagen: "https://images.unsplash.com/photo-1511920170033-f8396924c348", precio: 35 },
+      { id: 2, nombre: "Latte", imagen: "https://images.unsplash.com/photo-1509042239860-f550ce710b93", precio: 45 },
+      { id: 3, nombre: "Capuchino", imagen: "https://images.unsplash.com/photo-1536520933848-e8c9f8d1a757", precio: 42 },
+      { id: 4, nombre: "Croissant", imagen: "https://images.unsplash.com/photo-1584988273470-c88e6c35c9d2", precio: 28 },
+      { id: 5, nombre: "Pan de chocolate", imagen: "https://images.unsplash.com/photo-1617191510806-ff9970aa94ba", precio: 30 }
+      
+    ];
+
+    const container = document.getElementById("productos-container");
+    const carritoLista = document.getElementById("carrito-lista");
+    const carritoContador = document.getElementById("carrito-contador");
+    const totalCompra = document.getElementById("total-compra");
+    const carritoModal = document.getElementById("carrito-modal");
+    let carrito = [];
+
+    productos.forEach(p => {
+      const div = document.createElement("div");
+      div.className = "producto";
+      div.innerHTML = `
+        <img src="${p.imagen}" alt="${p.nombre}" />
+        <h3>${p.nombre}</h3>
+        <p>Precio: $${p.precio.toFixed(2)}</p>
+        <button onclick="agregarAlCarrito(${p.id})">Añadir</button>
+      `;
+      container.appendChild(div);
+    });
+
+    function agregarAlCarrito(id) {
+      const producto = productos.find(p => p.id === id);
+      carrito.push(producto);
+      actualizarCarrito();
+    }
+
+    function actualizarCarrito() {
+      carritoLista.innerHTML = '';
+      let total = 0;
+      carrito.forEach((item, index) => {
+        total += item.precio;
+        const li = document.createElement("li");
+        li.innerHTML = `${item.nombre} - $${item.precio.toFixed(2)} 
+          <button onclick="eliminarDelCarrito(${index})">❌</button>`;
+        carritoLista.appendChild(li);
+      });
+      carritoContador.textContent = carrito.length;
+      totalCompra.textContent = total.toFixed(2);
+    }
+
+    function eliminarDelCarrito(index) {
+      carrito.splice(index, 1);
+      actualizarCarrito();
+    }
+
+    function toggleCarrito() {
+      carritoModal.style.display = carritoModal.style.display === 'block' ? 'none' : 'block';
+    }
+  </script>
+</body>
+</html>
